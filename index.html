@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Flow Calculator for Pediatrics and Neonates</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #383838;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calculator-card {
+            background-color: #4a4a4a;
+            border: 1px solid #5a5a5a;
+            border-radius: 10px;
+            padding: 20px;
+            width: 480px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .title {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .calc-table th {
+            background-color: #009be3;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px;
+            text-align: center;
+            width: 50%;
+            border: 1px solid #0088c7;
+        }
+
+        .calc-table td {
+            background-color: #e0f4ff;
+            padding: 0;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #bce3fa;
+        }
+
+        .calc-table input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 14px;
+            color: #555555;
+            outline: none;
+            padding: 0 10px;
+        }
+
+        .calc-table input::placeholder {
+            color: #88a8b8;
+        }
+
+        .result-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0088c7;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-card">
+        <div class="title">High Flow Calculator for Pediatrics and Neonates</div>
+        
+        <table class="calc-table">
+            <thead>
+                <tr>
+                    <th>Patient Weight (kg)</th>
+                    <th>Recommended Flow (L/min)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="number" id="weightInput" step="0.1" placeholder="Enter weight" oninput="calculateFlow()">
+                    </td>
+                    <td>
+                        <span id="resultOutput" class="result-text">-</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function calculateFlow() {
+            const weightInput = document.getElementById('weightInput').value;
+            const weight = parseFloat(weightInput);
+            const resultElement = document.getElementById('resultOutput');
+
+            if (isNaN(weight) || weight <= 0) {
+                resultElement.innerText = '-';
+                return;
+            }
+
+            let flow = 0;
+            if (weight <= 10) {
+                flow = weight * 2;
+            } else {
+                flow = 15 + ((weight - 10) * 0.5);
+            }
+
+            if (flow > 40) {
+                flow = 40;
+            }
+
+            resultElement.innerText = flow.toFixed(1) + ' L/min';
+        }
+    </script>
+
+</body>
+</html>
